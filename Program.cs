@@ -53,6 +53,7 @@
                 Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
             }
 
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
 
             Console.WriteLine("Under $50 : ");
             List<Product> under50 = SearchProduct(catalog,product => product.Price < 50);
@@ -60,6 +61,24 @@
             foreach (Product product in under50)
             {
                 Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
+            }
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+            Console.WriteLine("In Stock : ");
+            List<Product> inStock = SearchProduct(catalog,product => product.Stock > 0);
+
+            foreach (Product product in inStock)
+            {
+                Console.WriteLine(product.Name + " -" + " Price:" + product.Price + "$" + " -" + " Stock : " + product.Stock);
+            }
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("Clothing Under $100 : ");
+
+            List<Product> clothingUnder100 = SearchProduct(catalog,product => product.Category == "Clothing" && product.Price < 100);
+
+            foreach (Product product in clothingUnder100)
+            {
+                Console.WriteLine(product.Name + " -" + " Price:" + product.Price + "$" + " -" + " Stock : " + product.Stock);
             }
             #endregion
         }
