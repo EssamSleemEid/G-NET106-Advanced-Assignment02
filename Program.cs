@@ -11,6 +11,18 @@
             public int Stock { get; set; }
         }
 
+        static List<Product> SearchProduct(List<Product> products, Func<Product, bool> filter)
+        {
+            List<Product> result = new List<Product>();
+            for (int i = 0; i < products.Count; i++)
+            {
+                if (filter(products[i]))
+                {
+                    result.Add(products[i]);
+                }
+            }
+            return result;
+        }
         static void Main(string[] args)
         {
             List<Product> catalog = new()
@@ -27,6 +39,29 @@
                 new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
             };
 
+            #region Task01
+            /*
+               Write a single method called SearchProducts that accepts two parameters The method should return a List containing only
+               the products that satisfy the condition. Then, call this method four times with different lambda expressions to perform the following searches
+            */
+
+            Console.WriteLine("Elictronics : ");
+            List<Product> electronics = SearchProduct(catalog,product => product.Category == "Electronics");
+
+            foreach (Product product in electronics)
+            {
+                Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
+            }
+
+
+            Console.WriteLine("Under $50 : ");
+            List<Product> under50 = SearchProduct(catalog,product => product.Price < 50);
+
+            foreach (Product product in under50)
+            {
+                Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
+            }
+            #endregion
         }
     }
 }
