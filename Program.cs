@@ -13,7 +13,7 @@ namespace G_NET106_Advanced_Assignment02
             public int Stock { get; set; }
         }
 
-        static List<Product> SearchProduct(List<Product> products, Func<Product, bool> filter)
+        static List<Product> SearchProduct(List<Product> products, Func<Product, bool> filter) // Func is used because the filter returns true or false
         {
             List<Product> result = new List<Product>();
             for (int i = 0; i < products.Count; i++)
@@ -26,12 +26,25 @@ namespace G_NET106_Advanced_Assignment02
             return result;
         }
 
-        static List<string> TransformProducts(List<Product> products,Func<Product, string> function)
+        static List<string> TransformProducts(List<Product> products,Func<Product, string> function) // Func is used because the function returns a value for each product
         {
             List<string> result = new List<string>();
             foreach (Product product in products)
             {
                 result.Add(function(product));
+            }
+            return result;
+        }
+
+        static List<Product> FilterProducts(List<Product> products,Predicate<Product> condition) // Predicate is used because the condition returns true or false
+        {
+            List<Product> result = new List<Product>();
+            foreach (Product product in products)
+            {
+                if (condition(product))
+                {
+                    result.Add(product);
+                }
             }
             return result;
         }
@@ -51,7 +64,7 @@ namespace G_NET106_Advanced_Assignment02
                 new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
             };
 
-            static void PrintReport(List<Product> products, Action<Product> action)
+            static void PrintReport(List<Product> products, Action<Product> action) // Action is used because the action does not return a value
             {
                 for (int i = 0; i < products.Count; i++)
                 {
@@ -132,6 +145,18 @@ namespace G_NET106_Advanced_Assignment02
             foreach (string item in priceLabels)
             {
                 Console.WriteLine(item);
+            }
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+            //Write a method called FilterProducts that accepts the product list and a Predicate.The method returns a List of products that match the condition. 
+
+            Console.WriteLine("Low-Stock Alert : ");
+
+            List<Product> lowStock = FilterProducts(catalog, product => product.Stock < 20);
+
+            foreach (Product product in lowStock)
+            {
+                Console.WriteLine("[LOW STOCK] "+ product.Name+": only "+ product.Stock+" left");
             }
             #endregion
         }
