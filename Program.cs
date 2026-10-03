@@ -1,4 +1,6 @@
-﻿namespace G_NET106_Advanced_Assignment02
+﻿using static G_NET106_Advanced_Assignment02.Program;
+
+namespace G_NET106_Advanced_Assignment02
 {
     internal class Program
     {
@@ -20,6 +22,16 @@
                 {
                     result.Add(products[i]);
                 }
+            }
+            return result;
+        }
+
+        static List<string> TransformProducts(List<Product> products,Func<Product, string> function)
+        {
+            List<string> result = new List<string>();
+            foreach (Product product in products)
+            {
+                result.Add(function(product));
             }
             return result;
         }
@@ -54,26 +66,26 @@
             */
 
             Console.WriteLine("Elictronics : ");
-            List<Product> electronics = SearchProduct(catalog,product => product.Category == "Electronics");
+            List<Product> electronics = SearchProduct(catalog, product => product.Category == "Electronics");
 
             foreach (Product product in electronics)
             {
-                Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
+                Console.WriteLine(product.Name + " -" + " Price:" + product.Price + "$" + " -" + " Stock : " + product.Stock);
             }
 
             Console.WriteLine("-----------------------------------------------------------------------------------------");
 
             Console.WriteLine("Under $50 : ");
-            List<Product> under50 = SearchProduct(catalog,product => product.Price < 50);
+            List<Product> under50 = SearchProduct(catalog, product => product.Price < 50);
 
             foreach (Product product in under50)
             {
-                Console.WriteLine(product.Name+" -"+" Price:"+product.Price+"$"+" -"+" Stock : "+product.Stock);
+                Console.WriteLine(product.Name + " -" + " Price:" + product.Price + "$" + " -" + " Stock : " + product.Stock);
             }
             Console.WriteLine("-----------------------------------------------------------------------------------------");
 
             Console.WriteLine("In Stock : ");
-            List<Product> inStock = SearchProduct(catalog,product => product.Stock > 0);
+            List<Product> inStock = SearchProduct(catalog, product => product.Stock > 0);
 
             foreach (Product product in inStock)
             {
@@ -82,7 +94,7 @@
             Console.WriteLine("-----------------------------------------------------------------------------------------");
             Console.WriteLine("Clothing Under $100 : ");
 
-            List<Product> clothingUnder100 = SearchProduct(catalog,product => product.Category == "Clothing" && product.Price < 100);
+            List<Product> clothingUnder100 = SearchProduct(catalog, product => product.Category == "Clothing" && product.Price < 100);
 
             foreach (Product product in clothingUnder100)
             {
@@ -96,11 +108,31 @@
             //Write a method called PrintReport that accepts the product list and an Action. The method loops through all products and calls the action on each one. The caller decides what to print by passing a lambda. 
 
             Console.WriteLine("Short Report : ");
-            PrintReport(catalog,product => Console.WriteLine(product.Name+" -"+ product.Price+"$"));
+            PrintReport(catalog, product => Console.WriteLine(product.Name + " -" + product.Price + "$"));
             Console.WriteLine("-----------------------------------------------------------------------------------------");
             Console.WriteLine("Detailed Report : ");
-            PrintReport(catalog,product => Console.WriteLine("["+product.Category+"] "+ product.Name +" | "+"Price:"+ product.Price+"$"+" | "+ "Stock:"+ product.Stock));
+            PrintReport(catalog, product => Console.WriteLine("[" + product.Category + "] " + product.Name + " | " + "Price:" + product.Price + "$" + " | " + "Stock:" + product.Stock));
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
 
+            //Write a method called TransformProducts that accepts the product list and a Func.
+
+            Console.WriteLine("Summary List : ");
+            List<string> summary = TransformProducts(catalog,product => product.Name+" ("+product.Price+")");
+
+            foreach (string item in summary)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+            Console.WriteLine("Price Labels : ");
+            List<string> priceLabels = TransformProducts(catalog,product =>product.Name+": "+(product.Price > 100 ? "Expensive!" : "Affordable"));
+
+            foreach (string item in priceLabels)
+            {
+                Console.WriteLine(item);
+            }
             #endregion
         }
     }
