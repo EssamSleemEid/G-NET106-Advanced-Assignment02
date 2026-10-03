@@ -39,6 +39,14 @@
                 new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
             };
 
+            static void PrintReport(List<Product> products, Action<Product> action)
+            {
+                for (int i = 0; i < products.Count; i++)
+                {
+                    action(products[i]);
+                }
+            }
+
             #region Task01
             /*
                Write a single method called SearchProducts that accepts two parameters The method should return a List containing only
@@ -80,6 +88,19 @@
             {
                 Console.WriteLine(product.Name + " -" + " Price:" + product.Price + "$" + " -" + " Stock : " + product.Stock);
             }
+            #endregion
+
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+            #region Task03
+            //Write a method called PrintReport that accepts the product list and an Action. The method loops through all products and calls the action on each one. The caller decides what to print by passing a lambda. 
+
+            Console.WriteLine("Short Report : ");
+            PrintReport(catalog,product => Console.WriteLine(product.Name+" -"+ product.Price+"$"));
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("Detailed Report : ");
+            PrintReport(catalog,product => Console.WriteLine("["+product.Category+"] "+ product.Name +" | "+"Price:"+ product.Price+"$"+" | "+ "Stock:"+ product.Stock));
+
             #endregion
         }
     }
